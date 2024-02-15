@@ -79,7 +79,7 @@ def find_face(file: UploadFile = File(...)):
     if not result:
         return []
         
-    return result
+    return face_db.get(result[0]['id'])
     
 
 if __name__ == "__main__":
