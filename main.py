@@ -6,6 +6,7 @@ from typing import Annotated
 from fastapi import FastAPI, Body, File, UploadFile
 from facedb import FaceDB
 from pydantic import BaseModel
+import uvicorn
 
 
 app = FastAPI()
@@ -80,3 +81,6 @@ def find_face(file: UploadFile = File(...)):
         
     return result
     
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", reload=True)
