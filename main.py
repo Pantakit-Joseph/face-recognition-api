@@ -7,9 +7,17 @@ from fastapi import FastAPI, Body, File, UploadFile
 from facedb import FaceDB
 from pydantic import BaseModel
 import uvicorn
-
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 face_db = FaceDB(
     path="facedata",
@@ -54,17 +62,25 @@ def add_face(name: Annotated[str, Body()], file: UploadFile = File(...)):
     # dir = "tmp"
     filename = upload_file_to_dir(file, dir)
     img_path = f"{dir}/{filename}"
-    id = None
+    id_face = None
     try:
+<<<<<<< HEAD
         id = face_db.add(name, img=img_path)
+=======
+        id_face = face_db.add(name, img=img_path)
+>>>>>>> 0ba33f6d9e3128edb46777268cdbf0b47fc15076
         # os.remove(img_path)
     except ValueError as e:
         print(e)
         return {"error": str(e)}
+<<<<<<< HEAD
     except Exception as e:
         print(e)
         return {"error": str(e)}
     return face_db.get(id)
+=======
+    return face_db.get(id_face)[0]
+>>>>>>> 0ba33f6d9e3128edb46777268cdbf0b47fc15076
 
 @app.get("/faces")
 def get_faces():
