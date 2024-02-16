@@ -50,15 +50,18 @@ def delete_face_all():
 
 @app.post("/add-face")
 def add_face(name: Annotated[str, Body()], file: UploadFile = File(...)):
-    # dir = "stroage"
-    dir = "tmp"
+    dir = "stroage"
+    # dir = "tmp"
     filename = upload_file_to_dir(file, dir)
     img_path = f"{dir}/{filename}"
     id = None
     try:
         id = face_db.add(name, img=img_path)
-        os.remove(img_path)
+        # os.remove(img_path)
     except ValueError as e:
+        print(e)
+        return {"error": str(e)}
+    except Exception as e:
         print(e)
         return {"error": str(e)}
     return face_db.get(id)
@@ -79,7 +82,9 @@ def find_face(file: UploadFile = File(...)):
     if not result:
         return []
         
-    return face_db.get(result[0]['id'])
+    for r in result:
+        r['data'] = face_db.get(r['id'])
+    return result
     
 
 if __name__ == "__main__":
