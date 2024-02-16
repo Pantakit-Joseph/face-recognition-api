@@ -64,23 +64,15 @@ def add_face(name: Annotated[str, Body()], file: UploadFile = File(...)):
     img_path = f"{dir}/{filename}"
     id_face = None
     try:
-<<<<<<< HEAD
         id = face_db.add(name, img=img_path)
-=======
-        id_face = face_db.add(name, img=img_path)
->>>>>>> 0ba33f6d9e3128edb46777268cdbf0b47fc15076
         # os.remove(img_path)
     except ValueError as e:
         print(e)
         return {"error": str(e)}
-<<<<<<< HEAD
     except Exception as e:
         print(e)
         return {"error": str(e)}
     return face_db.get(id)
-=======
-    return face_db.get(id_face)[0]
->>>>>>> 0ba33f6d9e3128edb46777268cdbf0b47fc15076
 
 @app.get("/faces")
 def get_faces():
