@@ -72,7 +72,7 @@ def add_face(name: Annotated[str, Body()], file: UploadFile = File(...)):
     except Exception as e:
         print(e)
         return {"error": str(e)}
-    return face_db.get(id)
+    return face_db.get(id)[0]
 
 @app.get("/faces")
 def get_faces():
